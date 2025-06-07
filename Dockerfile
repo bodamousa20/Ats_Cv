@@ -29,4 +29,4 @@ ENV TOKENIZERS_PARALLELISM=false
 EXPOSE 5000
 
 # Command to run the application with optimized settings
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "1", "--threads", "1", "--timeout", "120", "--max-requests", "100", "--max-requests-jitter", "10", "--worker-class", "sync", "--log-level", "info", "app:app"] 
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "1", "--threads", "1", "--timeout", "120", "--max-requests", "100", "--max-requests-jitter", "10", "--worker-class", "sync", "--log-level", "info", "app:app"]
