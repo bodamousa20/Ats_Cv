@@ -16,13 +16,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application
 COPY . .
 
-# Pre-download models
-RUN python3 -c "from transformers import BertTokenizer, BertModel; \
-    BertTokenizer.from_pretrained('bert-base-uncased', local_files_only=False); \
-    BertModel.from_pretrained('bert-base-uncased', local_files_only=False); \
-    from sentence_transformers import SentenceTransformer; \
-    SentenceTransformer('bert-base-nli-mean-tokens', local_files_only=False); \
-    SentenceTransformer('all-MiniLM-L6-v2', local_files_only=False)"
+# Create model cache directory
+RUN mkdir -p /app/model_cache
+
+# Set environment variables for model caching
+ENV TRANSFORMERS_CACHE=/app/model_cache
+ENV HF_HOME=/app/model_cache
+
+# Pre-download models with error handling
+RUN python3 download_models.py || (echo "Failed to download models" && exit 1)
 
 # Create a non-root user
 RUN useradd -m appuser && chown -R appuser:appuser /app
