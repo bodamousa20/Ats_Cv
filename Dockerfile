@@ -16,6 +16,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application
 COPY . .
 
+# Pre-download models
+RUN python3 -c "from transformers import BertTokenizer, BertModel; \
+    BertTokenizer.from_pretrained('bert-base-uncased', local_files_only=False); \
+    BertModel.from_pretrained('bert-base-uncased', local_files_only=False); \
+    from sentence_transformers import SentenceTransformer; \
+    SentenceTransformer('bert-base-nli-mean-tokens', local_files_only=False); \
+    SentenceTransformer('all-MiniLM-L6-v2', local_files_only=False)"
+
 # Create a non-root user
 RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
