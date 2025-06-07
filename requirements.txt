@@ -1,0 +1,14 @@
+flask==3.0.2
+flask-cors==4.0.0
+transformers==4.38.2
+torch==2.2.1
+spacy==3.7.4
+pandas==2.2.1
+scikit-learn==1.4.1
+sentence-transformers==2.5.1
+gunicorn==21.2.0
+python-dotenv==1.0.0
+--extra-index-url https://download.pytorch.org/whl/cpu
+# Railway-specific optimizations
+# Direct spaCy model installation
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
